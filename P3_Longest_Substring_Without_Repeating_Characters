@@ -1,0 +1,26 @@
+int lengthOfLongestSubstring(char* s) {
+    if (s == NULL) {
+        return 0;
+    }
+    short hashChar[256] = {0};
+    int maxLen = 0;
+    int len=0;
+    int now=0;
+    char c;
+    while(s[now] != '\0'){
+        c = s[now];
+        int lastIndex = hashChar[c];
+        // no repeat or lastindex not in current substring
+        if (lastIndex == 0 || now - len > lastIndex - 1){
+            len++;
+        }
+        else{   
+            maxLen = len > maxLen ? len : maxLen;
+            len = now - (lastIndex - 1);
+        }
+        hashChar[c] = now + 1;
+        now++;
+    }
+    maxLen = len > maxLen ? len : maxLen;
+    return maxLen;
+}
