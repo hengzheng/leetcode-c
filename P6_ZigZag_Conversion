@@ -1,0 +1,31 @@
+char* convert(char* s, int numRows) {
+    int len = strlen(s);
+    if(numRows == 1 || len <= numRows) {
+        return s;
+    }
+    char * ret = (char *)calloc(sizeof(char), len + 1);
+    // ZigZag cycle rules
+    // row num + row num - 2 (why 2:exclude first row and last row)
+    /*
+        a   |e  |i
+        b d |f h|j l
+        c   |g  |k
+    */
+    inc cyclen = numRows + (numRows - 2);
+    int n = 0;
+    for(int i = 0; i < numRows; i++) {
+        for(int j = 0; j * cyclen - i < len || j * cyclen + i < len; j++){
+            // not first row and last row and first col
+            if (i != 0 && i != numRows - 1 && j > 0) {
+                ret[n] = s[j * cyclen - i];
+                n++;
+            }
+            if ( j * cyclen + i < len) {
+                ret[n] = s[j * cyclen + i];
+                n++;
+            }
+        }
+    }
+    ret[n] = '\0';
+    return ret;
+}
