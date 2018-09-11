@@ -1,0 +1,37 @@
+int myAtoi(char* str) {
+    int min = 1<<31;
+    int max = min - 1;
+    double ret = 0;
+    int flag = 1;
+    int i = 0;
+    int n = 0;
+    while (str[i] != '\0') {
+        char c = str[i];
+        if (((c == '+' || c == '-' || c == ' ') && n == 0) || (c >= '0' && c <= '9')) {
+            switch (c) {
+                case '-' :
+                    flag = -1;
+                    n++;
+                    break;
+                case '+' :
+                    n++;
+                    break;
+                case ' ' :
+                    break;
+                default :
+                    ret = ret * 10 + (c - '0');
+                    if ( ret*flag < min || ret*flag > max ) {
+                        ret = flag > 0 ? max : min;
+                        return ret;
+                    }
+                    n++;
+            }
+            i++;
+        }
+        else
+        {
+            break;
+        }
+    }
+    return ret*flag;
+}

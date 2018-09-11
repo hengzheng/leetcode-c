@@ -1,11 +1,12 @@
 int reverse(int x) {
     double ret = 0;
-    int max = 1<<31;
+    int min = 1<<31;
+    int max = min - 1;
     while(x != 0){
         int rem = x % 10;
         x = x / 10;
         ret = ret * 10 + rem;
-        if (ret < -max || ret > max - 1){
+        if (ret < min || ret > max){
             return 0;
         }
     }
